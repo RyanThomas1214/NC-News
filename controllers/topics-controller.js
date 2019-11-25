@@ -1,4 +1,7 @@
+const { fetchTopics } = require("../models/topics-model");
+
 exports.getTopics = (req, res, next) => {
-  console.log("Hello from the topics-controller");
-  res.sendStatus(200);
+  fetchTopics().then(topics => {
+    res.status(200).send({ topics });
+  });
 };
