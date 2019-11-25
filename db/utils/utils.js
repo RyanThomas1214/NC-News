@@ -1,5 +1,6 @@
 exports.formatDates = list => {
-  return [];
+  if (list.length === 0) return [];
+  return list.map(article => article);
 };
 
 exports.makeRefObj = list => {};
