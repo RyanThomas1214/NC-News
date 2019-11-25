@@ -2,7 +2,7 @@ exports.up = function(knex) {
   console.log("Creating Users Table");
   return knex.schema.createTable("users", usersTable => {
     usersTable.string("username").primary();
-    usersTable.string("avatarURL");
+    usersTable.string("avatar_url");
     usersTable.string("name");
   });
 };
