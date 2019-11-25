@@ -185,4 +185,28 @@ describe("formatComments", () => {
     ];
     expect(formatComments(input, articleRef)).to.deep.equal(expected);
   });
+  it("Does not mutate original array", () => {
+    const input = [
+      {
+        body: "Oh, I've got.",
+        belongs_to: "They're not exactly dogs, are they?",
+        created_by: "butter_bridge",
+        votes: 16,
+        created_at: 1511354163389
+      }
+    ];
+    const articleRef = {
+      "They're not exactly dogs, are they?": 1
+    };
+    formatComments(input, articleRef);
+    expect(input).to.deep.equal([
+      {
+        body: "Oh, I've got.",
+        belongs_to: "They're not exactly dogs, are they?",
+        created_by: "butter_bridge",
+        votes: 16,
+        created_at: 1511354163389
+      }
+    ]);
+  });
 });
