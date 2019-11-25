@@ -30,6 +30,10 @@ describe.only("formatDates", () => {
       "votes"
     );
   });
+  it("Returns a new array", () => {
+    const input = [1, 2, 3];
+    expect(formatDates(input)).to.not.equal(input);
+  });
 });
 
 describe("makeRefObj", () => {});
