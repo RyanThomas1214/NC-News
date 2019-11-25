@@ -10,6 +10,13 @@ exports.formatDates = list => {
   return formattedArticle;
 };
 
-exports.makeRefObj = list => {};
+exports.makeRefObj = list => {
+  if (list.length === 0) return {};
+  const refObj = {};
+  list.forEach(article => {
+    refObj[article.title] = article.article_id;
+  });
+  return refObj;
+};
 
 exports.formatComments = (comments, articleRef) => {};

@@ -5,7 +5,7 @@ const {
   formatComments
 } = require("../db/utils/utils");
 
-describe.only("formatDates", () => {
+describe("formatDates", () => {
   it("The function returns an array", () => {
     expect(formatDates([])).to.be.an("array");
   });
@@ -81,6 +81,21 @@ describe.only("formatDates", () => {
   });
 });
 
-describe("makeRefObj", () => {});
+describe.only("makeRefObj", () => {
+  it("Returns an object", () => {
+    expect(makeRefObj([])).to.be.an("object");
+  });
+  it("Returns an object with a key = item's title and a value = item's ID", () => {
+    expect(makeRefObj([{ article_id: 1, title: "A" }])).to.deep.equal({ A: 1 });
+  });
+  it("Returns an object with a key = item's title and a value = item's ID for a multi-item array", () => {
+    const input = [
+      { article_id: 1, title: "A" },
+      { article_id: 2, title: "B" },
+      { article_id: 3, title: "C" }
+    ];
+    expect(makeRefObj(input)).to.deep.equal({ A: 1, B: 2, C: 3 });
+  });
+});
 
 describe("formatComments", () => {});
