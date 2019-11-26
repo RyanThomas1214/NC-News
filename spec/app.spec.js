@@ -142,7 +142,7 @@ describe("/api", () => {
             });
         });
       });
-      describe.only("PATCH", () => {
+      describe("PATCH", () => {
         it("status code 200: responds with the updated article object", () => {
           return request(app)
             .patch("/api/articles/1")
@@ -169,6 +169,15 @@ describe("/api", () => {
             .expect(400)
             .then(({ body: { msg } }) => {
               expect(msg).to.equal("Bad request");
+            });
+        });
+        it("status code 422: responds with msg Unprocessable Entity", () => {
+          return request(app)
+            .patch("/api/articles/99")
+            .send({ inc_votes: 3 })
+            .expect(422)
+            .then(({ body: { msg } }) => {
+              expect(msg).to.equal("Unprocessable Entity");
             });
         });
       });

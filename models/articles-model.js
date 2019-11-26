@@ -29,10 +29,17 @@ exports.updateArticle = (article_id, body) => {
     .where({ article_id })
     .returning("*")
     .then(([article]) => {
-      const newVotes = article.votes + body.inc_votes;
-      return knex("articles")
-        .update("votes", newVotes)
-        .where({ article_id })
-        .returning("*");
+      if (article === undefined) {
+        return Promise.reject({
+          status: 422,
+          msg: "Unprocessable Entity"
+        });
+      } else {
+        const newVotes = article.votes + body.inc_votes;
+        return knex("articles")
+          .update("votes", newVotes)
+          .where({ article_id })
+          .returning("*");
+      }
     });
 };
