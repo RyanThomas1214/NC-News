@@ -16,5 +16,10 @@ exports.fetchArticle = article_id => {
           const newArticle = { ...article, comment_count: comments.length };
           return newArticle;
         });
+    })
+    .then(newArticle => {
+      return !newArticle.article_id
+        ? Promise.reject({ status: 404, msg: "Article not found" })
+        : newArticle;
     });
 };

@@ -114,7 +114,14 @@ describe("/api", () => {
             .get("/api/articles/one")
             .expect(400);
         });
-        it("status code 404: responds with msg Article not found", () => {});
+        it.only("status code 404: responds with msg Article not found", () => {
+          return request(app)
+            .get("/api/articles/99")
+            .expect(404)
+            .then(({ body: { msg } }) => {
+              expect(msg).to.equal("Article not found");
+            });
+        });
       });
     });
   });
