@@ -58,17 +58,17 @@ describe("/api", () => {
           return request(app)
             .get("/api/users/butter_bridge")
             .expect(200)
-            .then(({ body }) => {
-              expect(body).to.be.an("object");
-              expect(body).keys("username", "avatar_url", "name");
+            .then(({ body: { user } }) => {
+              expect(user).to.be.an("object");
+              expect(user).keys("username", "avatar_url", "name");
             });
         });
         it("status code 404: responds with msg User not found", () => {
           return request(app)
             .get("/api/users/123")
             .expect(404)
-            .then(({ text }) => {
-              expect(text).to.equal("User not found");
+            .then(({ body: { msg } }) => {
+              expect(msg).to.equal("User not found");
             });
         });
       });
@@ -88,16 +88,16 @@ describe("/api", () => {
       });
     });
   });
-  describe.only("/articles", () => {
+  describe("/articles", () => {
     describe("/:article_id", () => {
       describe("GET", () => {
         it("status code 200: responds with an article object", () => {
           return request(app)
             .get("/api/articles/1")
             .expect(200)
-            .then(({ body }) => {
-              expect(body).to.be.an("object");
-              expect(body).keys(
+            .then(({ body: { article } }) => {
+              expect(article).to.be.an("object");
+              expect(article).keys(
                 "author",
                 "title",
                 "article_id",
@@ -114,6 +114,7 @@ describe("/api", () => {
             .get("/api/articles/one")
             .expect(400);
         });
+        it("status code 404: responds with msg Article not found", () => {});
       });
     });
   });
