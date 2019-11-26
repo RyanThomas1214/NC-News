@@ -23,3 +23,5 @@ exports.fetchArticle = article_id => {
         : newArticle;
     });
 };
+
+exports.updateArticle = () => {};

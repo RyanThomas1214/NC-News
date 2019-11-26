@@ -139,9 +139,17 @@ describe("/api", () => {
             });
         });
       });
+      describe.only("PATCH", () => {
+        it("status code 200: responds with the updated article object", () => {
+          return request(app)
+            .patch("/api/articles/1")
+            .send({ inc_votes: 3 })
+            .expect(200);
+        });
+      });
       describe("INVALID METHODS", () => {
         it("status code 405: responds with msg Method not allowed", () => {
-          const invalidMethods = ["post", "patch", "put", "delete"];
+          const invalidMethods = ["post", "put", "delete"];
           const methodPromises = invalidMethods.map(method => {
             return request(app)
               [method]("/api/articles/1")
