@@ -53,22 +53,24 @@ describe("/api", () => {
   });
   describe.only("/users", () => {
     describe("/:username", () => {
-      it("status code 200: responds with a user object", () => {
-        return request(app)
-          .get("/api/users/butter_bridge")
-          .expect(200)
-          .then(({ body }) => {
-            expect(body).to.be.an("object");
-            expect(body).keys("username", "avatar_url", "name");
-          });
-      });
-      it("status code 404: responds with msg User not found", () => {
-        return request(app)
-          .get("/api/users/123")
-          .expect(404)
-          .then(({ text }) => {
-            expect(text).to.equal("User not found");
-          });
+      describe("GET", () => {
+        it("status code 200: responds with a user object", () => {
+          return request(app)
+            .get("/api/users/butter_bridge")
+            .expect(200)
+            .then(({ body }) => {
+              expect(body).to.be.an("object");
+              expect(body).keys("username", "avatar_url", "name");
+            });
+        });
+        it("status code 404: responds with msg User not found", () => {
+          return request(app)
+            .get("/api/users/123")
+            .expect(404)
+            .then(({ text }) => {
+              expect(text).to.equal("User not found");
+            });
+        });
       });
     });
   });
