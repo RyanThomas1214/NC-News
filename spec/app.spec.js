@@ -62,6 +62,14 @@ describe("/api", () => {
             expect(body).keys("username", "avatar_url", "name");
           });
       });
+      it("status code 404: responds with msg User not found", () => {
+        return request(app)
+          .get("/api/users/123")
+          .expect(404)
+          .then(({ text }) => {
+            expect(text).to.equal("User not found");
+          });
+      });
     });
   });
 });
