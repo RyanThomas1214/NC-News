@@ -109,6 +109,11 @@ describe("/api", () => {
               );
             });
         });
+        it("status code 400: responds with msg Bad request", () => {
+          return request(app)
+            .get("/api/articles/one")
+            .expect(400);
+        });
       });
     });
   });
