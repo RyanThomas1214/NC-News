@@ -72,6 +72,20 @@ describe("/api", () => {
             });
         });
       });
+      describe("INVALID METHODS", () => {
+        it("status code 405: responds with msg method not allowed", () => {
+          const invalidMethods = ["post", "patch", "put", "delete"];
+          const methodPromises = invalidMethods.map(method => {
+            return request(app)
+              [method]("/api/users/butter_bridge")
+              .expect(405)
+              .then(({ body: { msg } }) => {
+                expect(msg).to.equal("Method not allowed");
+              });
+          });
+          return Promise.all(methodPromises);
+        });
+      });
     });
   });
 });
