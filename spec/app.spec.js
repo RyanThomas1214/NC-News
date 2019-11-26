@@ -94,7 +94,20 @@ describe("/api", () => {
         it("status code 200: responds with an article object", () => {
           return request(app)
             .get("/api/articles/1")
-            .expect(200);
+            .expect(200)
+            .then(({ body }) => {
+              expect(body).to.be.an("object");
+              expect(body).keys(
+                "author",
+                "title",
+                "article_id",
+                "body",
+                "topic",
+                "created_at",
+                "votes",
+                "comment_count"
+              );
+            });
         });
       });
     });
