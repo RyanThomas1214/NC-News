@@ -8,6 +8,14 @@ beforeEach(() => connection.seed.run());
 after(() => connection.destroy());
 
 describe("/api", () => {
+  it("status code 404: responds with msg path not found", () => {
+    return request(app)
+      .get("/abc")
+      .expect(404)
+      .then(({ body: { msg } }) => {
+        expect(msg).to.equal("Path not found");
+      });
+  });
   describe("/topics", () => {
     describe("GET", () => {
       it("status code 200: responds with an array of topic objects", () => {
