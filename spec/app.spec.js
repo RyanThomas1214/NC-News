@@ -71,6 +71,14 @@ describe("/api", () => {
               expect(msg).to.equal("User not found");
             });
         });
+        it("status code 404: responds with msg path not found", () => {
+          return request(app)
+            .get("/api/abcd")
+            .expect(404)
+            .then(({ body: { msg } }) => {
+              expect(msg).to.equal("Path not found");
+            });
+        });
       });
       describe("INVALID METHODS", () => {
         it("status code 405: responds with msg method not allowed", () => {
@@ -120,6 +128,14 @@ describe("/api", () => {
             .expect(404)
             .then(({ body: { msg } }) => {
               expect(msg).to.equal("Article not found");
+            });
+        });
+        it("status code 404: responds with msg path not found", () => {
+          return request(app)
+            .get("/api/abcd")
+            .expect(404)
+            .then(({ body: { msg } }) => {
+              expect(msg).to.equal("Path not found");
             });
         });
       });
