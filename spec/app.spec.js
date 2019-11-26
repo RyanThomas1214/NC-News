@@ -7,7 +7,7 @@ const connection = require("../db/connection");
 beforeEach(() => connection.seed.run());
 after(() => connection.destroy());
 
-describe.only("/api", () => {
+describe("/api", () => {
   describe("/topics", () => {
     describe("GET", () => {
       it("status code 200: responds with an array of topic objects", () => {
@@ -17,6 +17,14 @@ describe.only("/api", () => {
           .then(({ body: { topics } }) => {
             expect(topics).to.be.an("array");
             expect(topics[0]).keys("description", "slug");
+          });
+      });
+      it("status code 404: responds with msg path not found", () => {
+        return request(app)
+          .get("/api/abcd")
+          .expect(404)
+          .then(({ body: { msg } }) => {
+            expect(msg).to.equal("Path not found");
           });
       });
     });
