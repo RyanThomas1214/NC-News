@@ -51,4 +51,17 @@ describe("/api", () => {
       });
     });
   });
+  describe.only("/users", () => {
+    describe("/:username", () => {
+      it("status code 200: responds with a user object", () => {
+        return request(app)
+          .get("/api/users/butter_bridge")
+          .expect(200)
+          .then(({ body }) => {
+            expect(body).to.be.an("object");
+            expect(body).keys("username", "avatar_url", "name");
+          });
+      });
+    });
+  });
 });
