@@ -8,6 +8,8 @@ const {
   handle500s
 } = require("./errors");
 
+app.use(express.json());
+
 app.use("/api", apiRouter);
 
 // error handling middleware
