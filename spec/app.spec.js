@@ -114,13 +114,27 @@ describe("/api", () => {
             .get("/api/articles/one")
             .expect(400);
         });
-        it.only("status code 404: responds with msg Article not found", () => {
+        it("status code 404: responds with msg Article not found", () => {
           return request(app)
             .get("/api/articles/99")
             .expect(404)
             .then(({ body: { msg } }) => {
               expect(msg).to.equal("Article not found");
             });
+        });
+      });
+      describe("INVALID METHODS", () => {
+        it("status code 405: responds with msg Method not allowed", () => {
+          const invalidMethods = ["post", "patch", "put", "delete"];
+          const methodPromises = invalidMethods.map(method => {
+            return request(app)
+              [method]("/api/articles/1")
+              .expect(405)
+              .then(({ body: { msg } }) => {
+                expect(msg).to.equal("Method not allowed");
+              });
+          });
+          return Promise.all(methodPromises);
         });
       });
     });
