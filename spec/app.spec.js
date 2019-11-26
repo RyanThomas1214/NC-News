@@ -144,7 +144,20 @@ describe("/api", () => {
           return request(app)
             .patch("/api/articles/1")
             .send({ inc_votes: 3 })
-            .expect(200);
+            .expect(200)
+            .then(({ body: { article } }) => {
+              expect(article).to.be.an("object");
+              expect(article.votes).to.equal(103);
+              expect(article).keys(
+                "article_id",
+                "title",
+                "body",
+                "votes",
+                "topic",
+                "author",
+                "created_at"
+              );
+            });
         });
       });
       describe("INVALID METHODS", () => {

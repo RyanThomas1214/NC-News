@@ -10,6 +10,9 @@ exports.getArticle = (req, res, next) => {
 };
 
 exports.patchArticle = (req, res, next) => {
-  updateArticle();
-  res.sendStatus(200);
+  const { article_id } = req.params;
+  const body = req.body;
+  updateArticle(article_id, body).then(([article]) => {
+    res.status(200).send({ article });
+  });
 };

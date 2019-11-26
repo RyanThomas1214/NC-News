@@ -24,4 +24,15 @@ exports.fetchArticle = article_id => {
     });
 };
 
-exports.updateArticle = () => {};
+exports.updateArticle = (article_id, body) => {
+  return knex("articles")
+    .where({ article_id })
+    .returning("*")
+    .then(([article]) => {
+      const newVotes = article.votes + body.inc_votes;
+      return knex("articles")
+        .update("votes", newVotes)
+        .where({ article_id })
+        .returning("*");
+    });
+};
