@@ -2,6 +2,10 @@ process.env.NODE_ENV = "test";
 const request = require("supertest");
 const { expect } = require("chai");
 const app = require("../app");
+const connection = require("../db/connection");
+
+beforeEach(() => connection.seed.run());
+after(() => connection.destroy());
 
 describe.only("/api", () => {
   describe("/topics", () => {
