@@ -51,7 +51,7 @@ describe("/api", () => {
       });
     });
   });
-  describe.only("/users", () => {
+  describe("/users", () => {
     describe("/:username", () => {
       describe("GET", () => {
         it("status code 200: responds with a user object", () => {
@@ -84,6 +84,17 @@ describe("/api", () => {
               });
           });
           return Promise.all(methodPromises);
+        });
+      });
+    });
+  });
+  describe.only("/articles", () => {
+    describe("/:article_id", () => {
+      describe("GET", () => {
+        it("status code 200: responds with an article object", () => {
+          return request(app)
+            .get("/api/articles/1")
+            .expect(200);
         });
       });
     });
