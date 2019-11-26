@@ -120,7 +120,10 @@ describe("/api", () => {
         it("status code 400: responds with msg Bad request", () => {
           return request(app)
             .get("/api/articles/one")
-            .expect(400);
+            .expect(400)
+            .then(({ body: { msg } }) => {
+              expect(msg).to.equal("Bad request");
+            });
         });
         it("status code 404: responds with msg Article not found", () => {
           return request(app)
@@ -157,6 +160,15 @@ describe("/api", () => {
                 "author",
                 "created_at"
               );
+            });
+        });
+        it("status code 400: responds with msg Bad request", () => {
+          return request(app)
+            .patch("/api/articles/one")
+            .send({ inc_votes: 3 })
+            .expect(400)
+            .then(({ body: { msg } }) => {
+              expect(msg).to.equal("Bad request");
             });
         });
       });
