@@ -1,7 +1,8 @@
 const {
   addComment,
   fetchCommentsByArticle,
-  updateComment
+  updateComment,
+  removeComment
 } = require("../models/comments-model");
 
 exports.postComment = (req, res, next) => {
@@ -32,4 +33,11 @@ exports.patchComment = (req, res, next) => {
       res.status(200).send({ comment });
     })
     .catch(next);
+};
+
+exports.deleteComment = (req, res, next) => {
+  const { comment_id } = req.params;
+  removeComment(comment_id).then(() => {
+    res.sendStatus(204);
+  });
 };

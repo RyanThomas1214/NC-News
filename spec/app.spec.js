@@ -479,9 +479,16 @@ describe("/api", () => {
           });
       });
     });
-    describe.only("INVALID METHODS", () => {
+    describe("DELETE", () => {
+      it("status code 204: sends no content", () => {
+        return request(app)
+          .del("/api/comments/1")
+          .expect(204);
+      });
+    });
+    describe("INVALID METHODS", () => {
       it("status code 405: responds with msg Method not allowed", () => {
-        const invalidMethods = ["get", "post", "put", "delete"];
+        const invalidMethods = ["get", "post", "put"];
         const methodPromises = invalidMethods.map(method => {
           return request(app)
             [method]("/api/comments/1")

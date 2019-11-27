@@ -39,3 +39,9 @@ exports.updateComment = (comment_id, body) => {
       }
     });
 };
+
+exports.removeComment = comment_id => {
+  return knex("comments")
+    .where({ comment_id })
+    .del();
+};
