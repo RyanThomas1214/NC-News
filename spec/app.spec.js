@@ -242,10 +242,25 @@ describe("/api", () => {
           it("status code 400: responds with msg Bad request for body with column that doesn't exist on table", () => {
             return request(app)
               .post("/api/articles/1/comments")
-              .send({ username: "butter_bridge", text: "My First Comment" })
+              .send({
+                username: "butter_bridge",
+                text: "My First Comment"
+              })
               .expect(400)
               .then(({ body: { msg } }) => {
                 expect(msg).to.equal("Bad request");
+              });
+          });
+          it.only("status code 422: responds with msg Unprocessable Entity", () => {
+            return request(app)
+              .post("/api/articles/99/comments")
+              .send({
+                username: "butter_bridge",
+                body: "My First Comment"
+              })
+              .expect(422)
+              .then(({ body: { msg } }) => {
+                expect(msg).to.equal("Unprocessable Entity");
               });
           });
         });

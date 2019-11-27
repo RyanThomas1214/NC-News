@@ -7,9 +7,9 @@ exports.up = function(knex) {
     articlesTable.string("title");
     articlesTable.string("body", [10000]);
     articlesTable.integer("votes").defaultTo(0);
-    articlesTable.string("topic").references(topics.slug);
-    articlesTable.string("author").references(users.username);
-    articlesTable.timestamp("created_at").defaultTo(knex.fn.now());
+    articlesTable.string("topic").references("topics.slug");
+    articlesTable.string("author").references("users.username");
+    articlesTable.timestamp("created_at").defaultTo(knex.fn.now(3));
   });
 };
 

@@ -5,6 +5,7 @@ const {
   handle404s,
   handleCustoms,
   handle400s,
+  handle422s,
   handle500s
 } = require("./errors");
 
@@ -15,6 +16,7 @@ app.use("/api", apiRouter);
 // error handling middleware
 app.use(handleCustoms);
 app.use(handle400s);
+app.use(handle422s);
 app.use(handle500s);
 
 // error controllers
