@@ -142,6 +142,15 @@ describe("/api", () => {
             expect(articles).to.ascendingBy("created_at");
           });
       });
+      it("status code 200: allows query author which filters query when passed valid username", () => {
+        return request(app)
+          .get("/api/articles?author=butter_bridge")
+          .expect(200)
+          .then(({ body: { articles } }) => {
+            expect(articles.length).to.equal(3);
+            expect(articles[0].author).to.equal("butter_bridge");
+          });
+      });
     });
     describe("/:article_id", () => {
       describe("GET", () => {
