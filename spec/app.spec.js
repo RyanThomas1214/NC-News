@@ -202,7 +202,7 @@ describe("/api", () => {
           return Promise.all(methodPromises);
         });
       });
-      describe.only("/comments", () => {
+      describe("/comments", () => {
         describe("POST", () => {
           it("status code 201: responds with posted comment object", () => {
             return request(app)
@@ -251,7 +251,7 @@ describe("/api", () => {
                 expect(msg).to.equal("Bad request");
               });
           });
-          it.only("status code 422: responds with msg Unprocessable Entity", () => {
+          it("status code 422: responds with msg Unprocessable Entity", () => {
             return request(app)
               .post("/api/articles/99/comments")
               .send({
@@ -262,6 +262,20 @@ describe("/api", () => {
               .then(({ body: { msg } }) => {
                 expect(msg).to.equal("Unprocessable Entity");
               });
+          });
+        });
+        describe.only("INVALID METHODS", () => {
+          it("status code 405: responds with msg Method not allowed", () => {
+            const invalidMethods = ["get", "patch", "put", "delete"];
+            const methodPromises = invalidMethods.map(method => {
+              return request(app)
+                [method]("/api/articles/1/comments")
+                .expect(405)
+                .then(({ body: { msg } }) => {
+                  expect(msg).to.equal("Method not allowed");
+                });
+            });
+            return Promise.all(methodPromises);
           });
         });
       });
