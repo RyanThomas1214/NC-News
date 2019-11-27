@@ -118,6 +118,14 @@ describe("/api", () => {
             );
           });
       });
+      it("status code 200: allows query sort_by which defaults to date", () => {
+        return request(app)
+          .get("/api/articles")
+          .expect(200)
+          .then(({ body: { articles } }) => {
+            expect(articles).to.descendingBy("created_at");
+          });
+      });
     });
     describe("/:article_id", () => {
       describe("GET", () => {
