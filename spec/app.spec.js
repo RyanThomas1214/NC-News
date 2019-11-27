@@ -267,7 +267,7 @@ describe("/api", () => {
               });
           });
         });
-        describe.only("GET", () => {
+        describe("GET", () => {
           it("status code 200: responds with array of comment objects specific to article_id", () => {
             return request(app)
               .get("/api/articles/1/comments")
@@ -315,12 +315,20 @@ describe("/api", () => {
                 expect(comments).to.be.ascendingBy("votes");
               });
           });
-          it.only("status code 400: responds with msg Bad request for invalid article_id", () => {
+          it("status code 400: responds with msg Bad request for invalid article_id", () => {
             return request(app)
               .get("/api/articles/one/comments")
               .expect(400)
               .then(({ body: { msg } }) => {
                 expect(msg).to.equal("Bad request");
+              });
+          });
+          it("status code 404: responds with msg Article not found for non-existent article_id", () => {
+            return request(app)
+              .get("/api/articles/99/comments")
+              .expect(404)
+              .then(({ body: { msg } }) => {
+                expect(msg).to.equal("Article not found");
               });
           });
         });
