@@ -100,6 +100,25 @@ describe("/api", () => {
     });
   });
   describe("/articles", () => {
+    describe.only("GET", () => {
+      it("status code 200: responds with an array of article objects", () => {
+        return request(app)
+          .get("/api/articles")
+          .expect(200)
+          .then(({ body: { articles } }) => {
+            expect(articles).to.be.an("array");
+            expect(articles[0]).keys(
+              "author",
+              "title",
+              "article_id",
+              "topic",
+              "created_at",
+              "votes",
+              "comment_count"
+            );
+          });
+      });
+    });
     describe("/:article_id", () => {
       describe("GET", () => {
         it("status code 200: responds with an article object", () => {
@@ -323,7 +342,7 @@ describe("/api", () => {
                 expect(msg).to.equal("Bad request");
               });
           });
-          it.only("status code 400: responds with msg Bad request for invalid query value", () => {
+          it("status code 400: responds with msg Bad request for invalid query value", () => {
             return request(app)
               .get("/api/articles/1/comments?sort_by=cats")
               .expect(400)
