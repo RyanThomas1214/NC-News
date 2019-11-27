@@ -16,7 +16,9 @@ exports.postComment = (req, res, next) => {
 exports.getCommentsByArticle = (req, res, next) => {
   const { article_id } = req.params;
   const query = req.query;
-  fetchCommentsByArticle(article_id, query).then(comments => {
-    res.status(200).send({ comments });
-  });
+  fetchCommentsByArticle(article_id, query)
+    .then(comments => {
+      res.status(200).send({ comments });
+    })
+    .catch(next);
 };

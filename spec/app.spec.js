@@ -315,6 +315,14 @@ describe("/api", () => {
                 expect(comments).to.be.ascendingBy("votes");
               });
           });
+          it.only("status code 400: responds with msg Bad request for invalid article_id", () => {
+            return request(app)
+              .get("/api/articles/one/comments")
+              .expect(400)
+              .then(({ body: { msg } }) => {
+                expect(msg).to.equal("Bad request");
+              });
+          });
         });
         describe("INVALID METHODS", () => {
           it("status code 405: responds with msg Method not allowed", () => {
