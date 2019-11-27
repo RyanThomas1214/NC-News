@@ -105,16 +105,23 @@ describe("/api", () => {
             .expect(200)
             .then(({ body: { article } }) => {
               expect(article).to.be.an("object");
-              expect(article).keys(
+              expect(article).to.contain.keys(
                 "author",
                 "title",
                 "article_id",
                 "body",
                 "topic",
                 "created_at",
-                "votes",
-                "comment_count"
+                "votes"
               );
+            });
+        });
+        it("status code 200: adds property of comment_count to article object", () => {
+          return request(app)
+            .get("/api/articles/1")
+            .expect(200)
+            .then(({ body: { article } }) => {
+              expect(article.comment_count).to.equal("13");
             });
         });
         it("status code 400: responds with msg Bad request", () => {
@@ -193,6 +200,11 @@ describe("/api", () => {
               });
           });
           return Promise.all(methodPromises);
+        });
+      });
+      describe("/comments", () => {
+        describe("POST", () => {
+          it("status code 201: responds with posted comment object", () => {});
         });
       });
     });
