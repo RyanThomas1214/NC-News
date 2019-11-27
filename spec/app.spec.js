@@ -134,6 +134,14 @@ describe("/api", () => {
             expect(articles).to.descendingBy("votes");
           });
       });
+      it("status code 200: allows query order which defaults to desc", () => {
+        return request(app)
+          .get("/api/articles?order=asc")
+          .expect(200)
+          .then(({ body: { articles } }) => {
+            expect(articles).to.ascendingBy("created_at");
+          });
+      });
     });
     describe("/:article_id", () => {
       describe("GET", () => {

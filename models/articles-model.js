@@ -49,5 +49,5 @@ exports.fetchArticles = query => {
     .from("articles")
     .leftJoin("comments", "comments.article_id", "=", "articles.article_id")
     .groupBy("articles.article_id")
-    .orderBy(query.sort_by || "created_at", "desc");
+    .orderBy(query.sort_by || "created_at", query.order || "desc");
 };
