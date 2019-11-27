@@ -440,7 +440,7 @@ describe("/api", () => {
       });
     });
   });
-  describe.only("/comments", () => {
+  describe("/comments", () => {
     describe("PATCH", () => {
       it("status code 200: responds with the updated article object", () => {
         return request(app)
@@ -477,6 +477,20 @@ describe("/api", () => {
           .then(({ body: { msg } }) => {
             expect(msg).to.equal("Unprocessable Entity");
           });
+      });
+    });
+    describe.only("INVALID METHODS", () => {
+      it("status code 405: responds with msg Method not allowed", () => {
+        const invalidMethods = ["get", "post", "put", "delete"];
+        const methodPromises = invalidMethods.map(method => {
+          return request(app)
+            [method]("/api/comments/1")
+            .expect(405)
+            .then(({ body: { msg } }) => {
+              expect(msg).to.equal("Method not allowed");
+            });
+        });
+        return Promise.all(methodPromises);
       });
     });
   });
