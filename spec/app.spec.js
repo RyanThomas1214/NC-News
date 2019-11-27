@@ -100,7 +100,7 @@ describe("/api", () => {
     });
   });
   describe("/articles", () => {
-    describe.only("GET", () => {
+    describe("GET", () => {
       it("status code 200: responds with an array of article objects", () => {
         return request(app)
           .get("/api/articles")
@@ -167,6 +167,20 @@ describe("/api", () => {
           .then(({ body: { msg } }) => {
             expect(msg).to.equal("Bad request");
           });
+      });
+    });
+    describe.only("INVALID METHODS", () => {
+      it("status code 405: responds with msg Method not allowed", () => {
+        const invalidMethods = ["patch", "post", "put", "delete"];
+        const methodPromises = invalidMethods.map(method => {
+          return request(app)
+            [method]("/api/articles")
+            .expect(405)
+            .then(({ body: { msg } }) => {
+              expect(msg).to.equal("Method not allowed");
+            });
+        });
+        return Promise.all(methodPromises);
       });
     });
     describe("/:article_id", () => {
