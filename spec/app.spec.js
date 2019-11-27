@@ -479,7 +479,7 @@ describe("/api", () => {
           });
       });
     });
-    describe.only("DELETE", () => {
+    describe("DELETE", () => {
       it("status code 204: sends no content", () => {
         return request(app)
           .del("/api/comments/1")
