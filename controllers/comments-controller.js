@@ -1,4 +1,7 @@
-const { addComment } = require("../models/comments-model");
+const {
+  addComment,
+  fetchCommentsByArticle
+} = require("../models/comments-model");
 
 exports.postComment = (req, res, next) => {
   const { article_id } = req.params;
@@ -9,4 +12,11 @@ exports.postComment = (req, res, next) => {
       res.status(201).send({ comment });
     })
     .catch(next);
+};
+
+exports.getCommentsByArticle = (req, res, next) => {
+  const { article_id } = req.params;
+  fetchCommentsByArticle(article_id).then(comments => {
+    res.status(200).send({ comments });
+  });
 };

@@ -264,7 +264,24 @@ describe("/api", () => {
               });
           });
         });
-        describe.only("INVALID METHODS", () => {
+        describe.only("GET", () => {
+          it("status code 200: responds with array of comment objects specific to article_id", () => {
+            return request(app)
+              .get("/api/articles/1/comments")
+              .expect(200)
+              .then(({ body: { comments } }) => {
+                expect(comments).to.be.an("array");
+                expect(comments[0]).keys(
+                  "comment_id",
+                  "votes",
+                  "created_at",
+                  "author",
+                  "body"
+                );
+              });
+          });
+        });
+        describe("INVALID METHODS", () => {
           it("status code 405: responds with msg Method not allowed", () => {
             const invalidMethods = ["get", "patch", "put", "delete"];
             const methodPromises = invalidMethods.map(method => {

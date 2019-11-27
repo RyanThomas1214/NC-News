@@ -6,3 +6,10 @@ exports.addComment = (article_id, body) => {
   delete body.username;
   return knex("comments").insert(body, ["*"]);
 };
+
+exports.fetchCommentsByArticle = article_id => {
+  return knex
+    .select("comment_id", "votes", "created_at", "author", "body")
+    .from("comments")
+    .where({ article_id });
+};
