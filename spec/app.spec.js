@@ -151,6 +151,15 @@ describe("/api", () => {
             expect(articles[0].author).to.equal("butter_bridge");
           });
       });
+      it("status code 200: allows query topic which filters query when passed valid topic", () => {
+        return request(app)
+          .get("/api/articles?topic=mitch")
+          .expect(200)
+          .then(({ body: { articles } }) => {
+            expect(articles.length).to.equal(11);
+            expect(articles[0].topic).to.equal("mitch");
+          });
+      });
     });
     describe("/:article_id", () => {
       describe("GET", () => {

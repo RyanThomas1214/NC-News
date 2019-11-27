@@ -49,6 +49,7 @@ exports.fetchArticles = query => {
     .from("articles")
     .modify(knexQuery => {
       if (query.author) knexQuery.where({ "articles.author": query.author });
+      if (query.topic) knexQuery.where({ "articles.topic": query.topic });
     })
     .leftJoin("comments", "comments.article_id", "=", "articles.article_id")
     .groupBy("articles.article_id")
