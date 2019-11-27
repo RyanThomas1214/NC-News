@@ -1,6 +1,9 @@
 process.env.NODE_ENV = "test";
 const request = require("supertest");
-const { expect } = require("chai");
+const chai = require("chai");
+const { expect } = chai;
+const chaiSorted = require("chai-sorted");
+chai.use(chaiSorted);
 const app = require("../app");
 const connection = require("../db/connection");
 
@@ -278,6 +281,22 @@ describe("/api", () => {
                   "author",
                   "body"
                 );
+              });
+          });
+          it("status code 200: allows query sort_by which defaults to created_at", () => {
+            return request(app)
+              .get("/api/articles/1/comments")
+              .expect(200)
+              .then(({ body: { comments } }) => {
+                expect(comments).to.be.sortedBy("created_at");
+              });
+          });
+          it("status code 200: allows query sort_by of any valid column", () => {
+            return request(app)
+              .get("/api/articles/1/comments?sort_by=votes")
+              .expect(200)
+              .then(({ body: { comments } }) => {
+                expect(comments).to.be.sortedBy("votes");
               });
           });
         });
