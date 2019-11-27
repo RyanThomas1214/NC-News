@@ -323,6 +323,14 @@ describe("/api", () => {
                 expect(msg).to.equal("Bad request");
               });
           });
+          it.only("status code 400: responds with msg Bad request for invalid query value", () => {
+            return request(app)
+              .get("/api/articles/1/comments?sort_by=cats")
+              .expect(400)
+              .then(({ body: { msg } }) => {
+                expect(msg).to.equal("Bad request");
+              });
+          });
           it("status code 404: responds with msg Article not found for non-existent article_id", () => {
             return request(app)
               .get("/api/articles/99/comments")
