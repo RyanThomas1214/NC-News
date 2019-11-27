@@ -160,6 +160,14 @@ describe("/api", () => {
             expect(articles[0].topic).to.equal("mitch");
           });
       });
+      it("status code 400: responds with msg Bad request for incorrect query value", () => {
+        return request(app)
+          .get("/api/articles?sort_by=dogs")
+          .expect(400)
+          .then(({ body: { msg } }) => {
+            expect(msg).to.equal("Bad request");
+          });
+      });
     });
     describe("/:article_id", () => {
       describe("GET", () => {
