@@ -35,7 +35,7 @@ exports.updateArticle = (article_id, body) => {
     });
 };
 
-exports.fetchArticles = () => {
+exports.fetchArticles = query => {
   return knex
     .select(
       "articles.author",
@@ -49,5 +49,5 @@ exports.fetchArticles = () => {
     .from("articles")
     .leftJoin("comments", "comments.article_id", "=", "articles.article_id")
     .groupBy("articles.article_id")
-    .orderBy("created_at", "desc");
+    .orderBy(query.sort_by || "created_at", "desc");
 };

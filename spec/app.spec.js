@@ -126,6 +126,14 @@ describe("/api", () => {
             expect(articles).to.descendingBy("created_at");
           });
       });
+      it("status code 200: allows query sort_by of any valid column", () => {
+        return request(app)
+          .get("/api/articles?sort_by=votes")
+          .expect(200)
+          .then(({ body: { articles } }) => {
+            expect(articles).to.descendingBy("votes");
+          });
+      });
     });
     describe("/:article_id", () => {
       describe("GET", () => {
