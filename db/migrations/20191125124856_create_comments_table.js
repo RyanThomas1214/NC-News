@@ -2,7 +2,6 @@ const users = require("./20191125123220_create_users_table");
 const articles = require("./20191125123622_create_articles_table");
 
 exports.up = function(knex) {
-  console.log("Creating Comments Table");
   return knex.schema.createTable("comments", commentsTable => {
     commentsTable.increments("comment_id").primary();
     commentsTable.string("author").references(users.username);
@@ -14,6 +13,5 @@ exports.up = function(knex) {
 };
 
 exports.down = function(knex) {
-  console.log("Dropping Comments Table");
   return knex.schema.dropTable("comments");
 };
