@@ -202,7 +202,7 @@ describe("/api", () => {
           return Promise.all(methodPromises);
         });
       });
-      describe("/comments", () => {
+      describe.only("/comments", () => {
         describe("POST", () => {
           it("status code 201: responds with posted comment object", () => {
             return request(app)
@@ -219,6 +219,15 @@ describe("/api", () => {
                   "created_at",
                   "body"
                 );
+              });
+          });
+          it("status code 400: responds with msg Bad request for invalid article_id", () => {
+            return request(app)
+              .post("/api/articles/one/comments")
+              .send({ username: "butter_bridge", body: "My First Comment" })
+              .expect(400)
+              .then(({ body: { msg } }) => {
+                expect(msg).to.equal("Bad request");
               });
           });
         });
