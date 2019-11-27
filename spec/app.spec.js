@@ -479,11 +479,19 @@ describe("/api", () => {
           });
       });
     });
-    describe("DELETE", () => {
+    describe.only("DELETE", () => {
       it("status code 204: sends no content", () => {
         return request(app)
           .del("/api/comments/1")
           .expect(204);
+      });
+      it("status code 400: responds with msg Bad request", () => {
+        return request(app)
+          .del("/api/comments/one")
+          .expect(400)
+          .then(({ body: { msg } }) => {
+            expect(msg).to.equal("Bad request");
+          });
       });
     });
     describe("INVALID METHODS", () => {
