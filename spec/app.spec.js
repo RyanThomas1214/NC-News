@@ -239,6 +239,15 @@ describe("/api", () => {
                 expect(msg).to.equal("Bad request");
               });
           });
+          it("status code 400: responds with msg Bad request for body with column that doesn't exist on table", () => {
+            return request(app)
+              .post("/api/articles/1/comments")
+              .send({ username: "butter_bridge", text: "My First Comment" })
+              .expect(400)
+              .then(({ body: { msg } }) => {
+                expect(msg).to.equal("Bad request");
+              });
+          });
         });
       });
     });
