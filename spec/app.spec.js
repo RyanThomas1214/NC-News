@@ -288,7 +288,7 @@ describe("/api", () => {
               .get("/api/articles/1/comments")
               .expect(200)
               .then(({ body: { comments } }) => {
-                expect(comments).to.be.sortedBy("created_at");
+                expect(comments).to.be.descendingBy("created_at");
               });
           });
           it("status code 200: allows query sort_by of any valid column", () => {
@@ -296,13 +296,29 @@ describe("/api", () => {
               .get("/api/articles/1/comments?sort_by=votes")
               .expect(200)
               .then(({ body: { comments } }) => {
-                expect(comments).to.be.sortedBy("votes");
+                expect(comments).to.be.descendingBy("votes");
+              });
+          });
+          it("status code 200: allows query order which defaults to desc", () => {
+            return request(app)
+              .get("/api/articles/1/comments?sort_by=votes")
+              .expect(200)
+              .then(({ body: { comments } }) => {
+                expect(comments).to.be.descendingBy("votes");
+              });
+          });
+          it("status code 200: allows query order to be changed to asc", () => {
+            return request(app)
+              .get("/api/articles/1/comments?sort_by=votes&order=asc")
+              .expect(200)
+              .then(({ body: { comments } }) => {
+                expect(comments).to.be.ascendingBy("votes");
               });
           });
         });
         describe("INVALID METHODS", () => {
           it("status code 405: responds with msg Method not allowed", () => {
-            const invalidMethods = ["get", "patch", "put", "delete"];
+            const invalidMethods = ["patch", "put", "delete"];
             const methodPromises = invalidMethods.map(method => {
               return request(app)
                 [method]("/api/articles/1/comments")

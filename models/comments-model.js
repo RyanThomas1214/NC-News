@@ -12,5 +12,5 @@ exports.fetchCommentsByArticle = (article_id, query) => {
     .select("comment_id", "votes", "created_at", "author", "body")
     .from("comments")
     .where({ article_id })
-    .orderBy(query.sort_by || "created_at");
+    .orderBy(query.sort_by || "created_at", query.order || "desc");
 };
