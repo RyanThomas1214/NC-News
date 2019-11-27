@@ -202,9 +202,14 @@ describe("/api", () => {
           return Promise.all(methodPromises);
         });
       });
-      describe("/comments", () => {
+      describe.only("/comments", () => {
         describe("POST", () => {
-          it("status code 201: responds with posted comment object", () => {});
+          it("status code 201: responds with posted comment object", () => {
+            return request(app)
+              .post("/api/articles/1/comments")
+              .send({ username: "butter_bridge", body: "FIRST" })
+              .expect(201);
+          });
         });
       });
     });
