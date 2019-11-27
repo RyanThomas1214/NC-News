@@ -169,7 +169,7 @@ describe("/api", () => {
           });
       });
     });
-    describe.only("INVALID METHODS", () => {
+    describe("INVALID METHODS", () => {
       it("status code 405: responds with msg Method not allowed", () => {
         const invalidMethods = ["patch", "post", "put", "delete"];
         const methodPromises = invalidMethods.map(method => {
@@ -437,6 +437,46 @@ describe("/api", () => {
             return Promise.all(methodPromises);
           });
         });
+      });
+    });
+  });
+  describe.only("/comments", () => {
+    describe("PATCH", () => {
+      it("status code 200: responds with the updated article object", () => {
+        return request(app)
+          .patch("/api/comments/1")
+          .send({ inc_votes: 3 })
+          .expect(200)
+          .then(({ body: { comment } }) => {
+            expect(comment).to.be.an("object");
+            expect(comment.votes).to.equal(19);
+            expect(comment).keys(
+              "comment_id",
+              "author",
+              "article_id",
+              "votes",
+              "created_at",
+              "body"
+            );
+          });
+      });
+      it("status code 400: responds with msg Bad request", () => {
+        return request(app)
+          .patch("/api/comments/one")
+          .send({ inc_votes: 3 })
+          .expect(400)
+          .then(({ body: { msg } }) => {
+            expect(msg).to.equal("Bad request");
+          });
+      });
+      it("status code 422: responds with msg Unprocessable Entity", () => {
+        return request(app)
+          .patch("/api/comments/99")
+          .send({ inc_votes: 3 })
+          .expect(422)
+          .then(({ body: { msg } }) => {
+            expect(msg).to.equal("Unprocessable Entity");
+          });
       });
     });
   });

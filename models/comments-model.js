@@ -19,3 +19,23 @@ exports.fetchCommentsByArticle = (article_id, query) => {
         : comments;
     });
 };
+
+exports.updateComment = (comment_id, body) => {
+  return knex("comments")
+    .where({ comment_id })
+    .returning("*")
+    .then(([comment]) => {
+      if (comment === undefined) {
+        return Promise.reject({
+          status: 422,
+          msg: "Unprocessable Entity"
+        });
+      } else {
+        const newVotes = comment.votes + body.inc_votes;
+        return knex("comments")
+          .update("votes", newVotes)
+          .where({ comment_id })
+          .returning("*");
+      }
+    });
+};
