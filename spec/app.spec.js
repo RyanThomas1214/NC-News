@@ -521,7 +521,7 @@ describe("/api", () => {
           });
       });
     });
-    describe("DELETE", () => {
+    describe.only("DELETE", () => {
       it("status code 204: sends no content", () => {
         return request(app)
           .del("/api/comments/1")
@@ -533,6 +533,14 @@ describe("/api", () => {
           .expect(400)
           .then(({ body: { msg } }) => {
             expect(msg).to.equal("Bad request");
+          });
+      });
+      it("status code 404: responds with msg comment not found", () => {
+        return request(app)
+          .del("/api/comments/999")
+          .expect(404)
+          .then(({ body: { msg } }) => {
+            expect(msg).to.equal("Comment not found");
           });
       });
     });

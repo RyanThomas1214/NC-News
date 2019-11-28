@@ -43,5 +43,9 @@ exports.updateComment = (comment_id, body) => {
 exports.removeComment = comment_id => {
   return knex("comments")
     .where({ comment_id })
-    .del();
+    .del()
+    .then(delCount => {
+      if (delCount === 0)
+        return Promise.reject({ status: 404, msg: "Comment not found" });
+    });
 };
