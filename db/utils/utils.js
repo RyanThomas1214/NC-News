@@ -1,5 +1,4 @@
 exports.formatDates = list => {
-  if (list.length === 0) return [];
   const formattedArticle = [];
   list.forEach(article => {
     formattedArticle.push({
@@ -11,7 +10,6 @@ exports.formatDates = list => {
 };
 
 exports.makeRefObj = list => {
-  if (list.length === 0) return {};
   const refObj = {};
   list.forEach(article => {
     refObj[article.title] = article.article_id;
@@ -20,7 +18,6 @@ exports.makeRefObj = list => {
 };
 
 exports.formatComments = (comments, articleRef) => {
-  if (comments.length === 0) return [];
   const formattedComments = [];
   comments.forEach(comment => {
     formattedComments.push({
