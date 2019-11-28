@@ -4,7 +4,9 @@ exports.addComment = (article_id, body) => {
   body.author = body.username;
   body.article_id = article_id;
   delete body.username;
-  return knex("comments").insert(body, ["*"]);
+  return knex("comments")
+    .insert(body)
+    .returning("*");
 };
 
 exports.fetchCommentsByArticle = (article_id, query) => {
