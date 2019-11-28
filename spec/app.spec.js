@@ -442,7 +442,7 @@ describe("/api", () => {
   });
   describe("/comments", () => {
     describe("PATCH", () => {
-      it("status code 200: responds with the updated article object", () => {
+      it("status code 200: responds with the updated article object (increment votes)", () => {
         return request(app)
           .patch("/api/comments/1")
           .send({ inc_votes: 3 })
@@ -450,6 +450,24 @@ describe("/api", () => {
           .then(({ body: { comment } }) => {
             expect(comment).to.be.an("object");
             expect(comment.votes).to.equal(19);
+            expect(comment).keys(
+              "comment_id",
+              "author",
+              "article_id",
+              "votes",
+              "created_at",
+              "body"
+            );
+          });
+      });
+      it("status code 200: responds with the updated article object (decrement votes)", () => {
+        return request(app)
+          .patch("/api/comments/1")
+          .send({ inc_votes: -3 })
+          .expect(200)
+          .then(({ body: { comment } }) => {
+            expect(comment).to.be.an("object");
+            expect(comment.votes).to.equal(13);
             expect(comment).keys(
               "comment_id",
               "author",
