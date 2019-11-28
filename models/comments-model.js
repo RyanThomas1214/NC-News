@@ -1,20 +1,18 @@
 const knex = require("../db/connection");
 
-exports.addComment = (article_id, body) => {
-  body.author = body.username;
-  body.article_id = article_id;
-  delete body.username;
+exports.addComment = (article_id, { username, body }) => {
+  const comment = { author: username, article_id, body };
   return knex("comments")
-    .insert(body)
+    .insert(comment)
     .returning("*");
 };
 
-exports.fetchCommentsByArticle = (article_id, query) => {
+exports.fetchCommentsByArticle = (article_id, { sort_by, order }) => {
   return knex
     .select("comment_id", "votes", "created_at", "author", "body")
     .from("comments")
     .where({ article_id })
-    .orderBy(query.sort_by || "created_at", query.order || "desc")
+    .orderBy(sort_by || "created_at", order || "desc")
     .then(comments => {
       return comments.length === 0
         ? Promise.reject({ status: 404, msg: "Article not found" })

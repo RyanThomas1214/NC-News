@@ -35,7 +35,7 @@ exports.updateArticle = (article_id, body) => {
     });
 };
 
-exports.fetchArticles = query => {
+exports.fetchArticles = ({ author, topic, sort_by, order }) => {
   return knex
     .select(
       "articles.author",
@@ -48,10 +48,10 @@ exports.fetchArticles = query => {
     .count("comments.article_id as comment_count")
     .from("articles")
     .modify(knexQuery => {
-      if (query.author) knexQuery.where({ "articles.author": query.author });
-      if (query.topic) knexQuery.where({ "articles.topic": query.topic });
+      if (author) knexQuery.where({ "articles.author": author });
+      if (topic) knexQuery.where({ "articles.topic": topic });
     })
     .leftJoin("comments", "comments.article_id", "=", "articles.article_id")
     .groupBy("articles.article_id")
-    .orderBy(query.sort_by || "created_at", query.order || "desc");
+    .orderBy(sort_by || "created_at", order || "desc");
 };
