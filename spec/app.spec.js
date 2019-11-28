@@ -11,6 +11,14 @@ beforeEach(() => connection.seed.run());
 after(() => connection.destroy());
 
 describe("/api", () => {
+  it.only("status code 200: responds with JSON describing all endpoints", () => {
+    return request(app)
+      .get("/api")
+      .expect(200)
+      .then(endpoints => {
+        expect(endpoints).to.be.an("object");
+      });
+  });
   it("status code 404: responds with msg path not found", () => {
     return request(app)
       .get("/abc")
