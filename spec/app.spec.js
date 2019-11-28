@@ -11,21 +11,37 @@ beforeEach(() => connection.seed.run());
 after(() => connection.destroy());
 
 describe("/api", () => {
-  it("status code 200: responds with JSON describing all endpoints", () => {
-    return request(app)
-      .get("/api")
-      .expect(200)
-      .then(endpoints => {
-        expect({ endpoints }).to.be.an("object");
-      });
+  describe("GET", () => {
+    it("status code 200: responds with JSON describing all endpoints", () => {
+      return request(app)
+        .get("/api")
+        .expect(200)
+        .then(endpoints => {
+          expect({ endpoints }).to.be.an("object");
+        });
+    });
+    it("status code 404: responds with msg path not found", () => {
+      return request(app)
+        .get("/abc")
+        .expect(404)
+        .then(({ body: { msg } }) => {
+          expect(msg).to.equal("Path not found");
+        });
+    });
   });
-  it("status code 404: responds with msg path not found", () => {
-    return request(app)
-      .get("/abc")
-      .expect(404)
-      .then(({ body: { msg } }) => {
-        expect(msg).to.equal("Path not found");
+  describe("INVALID METHODS", () => {
+    it("status code 405: responds with msg method not allowed", () => {
+      const invalidMethods = ["post", "patch", "put", "delete"];
+      const methodPromises = invalidMethods.map(method => {
+        return request(app)
+          [method]("/api")
+          .expect(405)
+          .then(({ body: { msg } }) => {
+            expect(msg).to.equal("Method not allowed");
+          });
       });
+      return Promise.all(methodPromises);
+    });
   });
   describe("/topics", () => {
     describe("GET", () => {
