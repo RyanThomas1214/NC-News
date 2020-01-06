@@ -71,3 +71,7 @@ GitHub - [RyanThomas1214](https://github.com/RyanThomas1214 "RyanThomas1214")
 Hosted using netlify
 
 [NC-News](https://youthful-bell-236ead.netlify.com/ "NC-News")
+
+## Frontend Repository
+
+[fe-nc-News](https://github.com/RyanThomas1214/fe-nc-news "fe-nc-News")
