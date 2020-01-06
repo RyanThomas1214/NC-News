@@ -61,3 +61,15 @@ npm test-utils
 * [Knex](http://knexjs.org/ "Knex") - A SQL query builder.
 
 * [node-postgres](https://node-postgres.com/ "node-postgres") - Modules for interfacing with PostgreSQL databases.
+
+## Authors
+
+**Ryan Thomas**
+
+GitHub - [RyanThomas1214](https://github.com/RyanThomas1214 "RyanThomas1214")
+
+## Hosted Site
+
+Hosted using netlify
+
+[NC-News](https://youthful-bell-236ead.netlify.com/ "NC-News")
