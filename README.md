@@ -34,11 +34,9 @@ Once the seed file has run you can then start the server by using the command:
 npm start
 ```
 
-When the server is up and running you are able to send the API test requests by using programs such as Insomnia. A list of available endpoints can be found on the endpoint:
+When the server is up and running you are able to send the API test requests by using programs such as Insomnia. A list of available endpoints can be viewed in your browser on the endpoint:
 
-```bash
-GET localhost:9090/api
-```
+[http://localhost:9090/api](http://localhost:9090/api)
 
 ## Running the tests
 
