@@ -7,9 +7,9 @@ This repository is the Backend of a 'Reddit-like' application called NC-News. Th
 Clone this repo:
 
 ```bash
-git clone https://github.com/RyanThomas1214/NC-News
+git clone https://github.com/RyanThomas1214/be-nc-news.git
 
-cd NC-news
+cd be-nc-news
 ```
 
 Once opened, you should install the dev dependencies using the following command:
