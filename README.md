@@ -74,4 +74,4 @@ Hosted using netlify
 
 ## Frontend Repository
 
-[fe-nc-News](https://github.com/RyanThomas1214/fe-nc-news "fe-nc-News")
+[fe-nc-news](https://github.com/RyanThomas1214/fe-nc-news "fe-nc-news")
